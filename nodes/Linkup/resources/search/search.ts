@@ -13,7 +13,7 @@ export const searchOperationDescription: INodeProperties[] = [
 		required: true,
 		default: '',
 		placeholder: 'What is the latest news about AI?',
-		description: 'The natural language question for which you want to retrieve context',
+		description: 'The natural language question for which you want to retrieve context. <a href="https://prompt.linkup.so/" target="_blank">Optimize your prompt here</a>.',
 		displayOptions: {
 			show: showOnlyForSearch,
 		},
@@ -97,7 +97,7 @@ export const searchOperationDescription: INodeProperties[] = [
 		required: true,
 		default: '{}',
 		placeholder: '{ "name": "string", "age": "number" }',
-		description: 'JSON schema defining the structure of the response (required when Output Type is Structured)',
+		description: 'JSON schema defining the structure of the response (required when Output Type is Structured). <a href="https://prompt.linkup.so/" target="_blank">Optimize your schema here</a>.',
 		displayOptions: {
 			show: {
 				...showOnlyForSearch,
