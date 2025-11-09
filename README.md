@@ -1,4 +1,4 @@
-# n8n-nodes-linkup
+# n8n-nodes-linkup-so
 
 This is an n8n community node that integrates the [Linkup API](https://linkup.so) into your n8n workflows. Linkup is a web search engine designed specifically for AI applications, providing reliable and factual grounding data for LLMs.
 
@@ -15,7 +15,7 @@ This is an n8n community node that integrates the [Linkup API](https://linkup.so
 
 Follow the [installation guide](https://docs.n8n.io/integrations/community-nodes/installation/) in the n8n community nodes documentation.
 
-Community nodes are installed from npm. The package name is: `n8n-nodes-linkup`
+Community nodes are installed from npm. The package name is: `n8n-nodes-linkup-so`
 
 ## Operations
 
