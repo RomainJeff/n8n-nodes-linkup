@@ -219,6 +219,21 @@ export const searchOperationDescription: INodeProperties[] = [
 				},
 			},
 			{
+				displayName: 'Max Results',
+				name: 'maxResults',
+				type: 'number',
+				default: undefined,
+				placeholder: '10',
+				description: 'Maximum number of search results to return in a single API call',
+				routing: {
+					request: {
+						body: {
+							maxResults: '={{ $value }}',
+						},
+					},
+				},
+			},
+			{
 				displayName: 'To Date',
 				name: 'toDate',
 				type: 'dateTime',
