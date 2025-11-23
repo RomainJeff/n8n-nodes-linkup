@@ -1,5 +1,10 @@
 # n8n-nodes-linkup-so
 
+![npm update](https://img.shields.io/npm/last-update/n8n-nodes-linkup-so)
+![npm version](https://img.shields.io/npm/v/n8n-nodes-linkup-so)
+![npm downloads](https://img.shields.io/npm/dm/n8n-nodes-linkup-so)
+
+
 This is an n8n community node that integrates the [Linkup API](https://linkup.so) into your n8n workflows. Linkup is a web search engine designed specifically for AI applications, providing reliable and factual grounding data for LLMs.
 
 [n8n](https://n8n.io/) is a [fair-code licensed](https://docs.n8n.io/sustainable-use-license/) workflow automation platform.
