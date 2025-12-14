@@ -1,6 +1,6 @@
 {
     "name": "n8n-nodes-linkup-so",
-    "version": "0.2.0",
+    "version": "0.2.1",
     "description": "n8n node for Linkup API - Web search and content fetching for AI applications",
     "license": "MIT",
     "homepage": "",
