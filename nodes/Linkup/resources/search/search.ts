@@ -222,7 +222,7 @@ export const searchOperationDescription: INodeProperties[] = [
 				displayName: 'Max Results',
 				name: 'maxResults',
 				type: 'number',
-				default: undefined,
+				default: '',
 				placeholder: '10',
 				description: 'Maximum number of search results to return in a single API call',
 				routing: {
