@@ -38,12 +38,12 @@ export class Linkup implements INodeType {
 				noDataExpression: true,
 				options: [
 					{
-						name: 'Search',
-						value: 'search',
-					},
-					{
 						name: 'Fetch',
 						value: 'fetch',
+					},
+					{
+						name: 'Search',
+						value: 'search',
 					},
 				],
 				default: 'search',
