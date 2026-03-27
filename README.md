@@ -117,7 +117,7 @@ You can combine Search and Fetch operations in your workflows:
 
 ## License
 
-[MIT](LICENSE.md)
+[MIT](LICENSE)
 
 ## Support
 
