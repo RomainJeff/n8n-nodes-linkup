@@ -36,6 +36,20 @@ export const fetchOperationDescription: INodeProperties[] = [
 		},
 		options: [
 			{
+				displayName: 'Extract Images',
+				name: 'extractImages',
+				type: 'boolean',
+				default: false,
+				description: 'Whether to extract images from the webpage',
+				routing: {
+					request: {
+						body: {
+							extractImages: '={{ $value }}',
+						},
+					},
+				},
+			},
+			{
 				displayName: 'Include Raw HTML',
 				name: 'includeRawHtml',
 				type: 'boolean',
@@ -59,20 +73,6 @@ export const fetchOperationDescription: INodeProperties[] = [
 					request: {
 						body: {
 							renderJs: '={{ $value }}',
-						},
-					},
-				},
-			},
-			{
-				displayName: 'Extract Images',
-				name: 'extractImages',
-				type: 'boolean',
-				default: false,
-				description: 'Whether to extract images from the webpage',
-				routing: {
-					request: {
-						body: {
-							extractImages: '={{ $value }}',
 						},
 					},
 				},
