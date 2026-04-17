@@ -3,7 +3,6 @@
 	"nodeVersion": "1.0",
 	"codexVersion": "1.0",
 	"categories": ["Data & Storage"],
-	"subcategories": {},
 	"alias": ["linkup", "web search", "fetch", "scrape", "ai search"],
 	"resources": {
 		"primaryDocumentation": [
