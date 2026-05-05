@@ -34,8 +34,9 @@ Perform web searches and retrieve context for AI grounding. The search operation
 
 - **Query** (required): Your natural language search question
 - **Depth** (required): Choose search precision level
-  - **Standard**: Fast search for straightforward queries (costs 1 credit per search)
-  - **Deep**: Comprehensive search for complex queries requiring detailed analysis (costs 10 credits per search)
+  - **Fast**: Sub-second search optimized for simple, focused queries (beta)
+  - **Standard**: Fast search for straightforward queries
+  - **Deep**: Comprehensive search for complex queries requiring detailed analysis
 - **Output Type** (required): Select the response format
   - **Sourced Answer**: Returns a concise answer with source citations
   - **Search Results**: Returns a list of relevant documents
@@ -88,10 +89,10 @@ For more information on obtaining and managing your API key, refer to the [Linku
 
 ## Usage Tips
 
-### Credit Management
+### Choosing a Depth
 
-- Monitor your credit usage with the standard vs. deep search options
-- Use **standard** depth for simple queries to save credits
+- Use **fast** for simple, focused queries when latency matters
+- Use **standard** for most everyday queries
 - Reserve **deep** searches for complex questions requiring comprehensive analysis
 
 ### Search Output Types

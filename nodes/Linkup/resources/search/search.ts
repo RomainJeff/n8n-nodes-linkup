@@ -31,20 +31,25 @@ export const searchOperationDescription: INodeProperties[] = [
 		type: 'options',
 		required: true,
 		default: 'standard',
-		description: 'Search precision level. Standard is faster, deep is more comprehensive.',
+		description: 'Search precision level. Fast is sub-second, standard balances speed and quality, deep is more comprehensive.',
 		displayOptions: {
 			show: showOnlyForSearch,
 		},
 		options: [
 			{
+				name: 'Fast',
+				value: 'fast',
+				description: 'Sub-second search optimized for simple, focused queries (beta)',
+			},
+			{
 				name: 'Standard',
 				value: 'standard',
-				description: 'Fast search for straightforward queries (1 credit per call)',
+				description: 'Fast search for straightforward queries',
 			},
 			{
 				name: 'Deep',
 				value: 'deep',
-				description: 'Comprehensive search for complex queries (10 credits per call)',
+				description: 'Comprehensive search for complex queries',
 			},
 		],
 		routing: {
