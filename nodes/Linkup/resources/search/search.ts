@@ -31,11 +31,16 @@ export const searchOperationDescription: INodeProperties[] = [
 		type: 'options',
 		required: true,
 		default: 'standard',
-		description: 'Search precision level. Standard is faster, deep is more comprehensive.',
+		description: 'Search precision level. Fast is sub-second, standard balances speed and quality, deep is more comprehensive.',
 		displayOptions: {
 			show: showOnlyForSearch,
 		},
 		options: [
+			{
+				name: 'Fast',
+				value: 'fast',
+				description: 'Sub-second search optimized for simple, focused queries (beta)',
+			},
 			{
 				name: 'Standard',
 				value: 'standard',
