@@ -1,6 +1,7 @@
 import { NodeConnectionTypes, type INodeType, type INodeTypeDescription } from 'n8n-workflow';
 import { searchDescription } from './resources/search';
 import { fetchDescription } from './resources/fetch';
+import { researchDescription } from './resources/research';
 
 export class Linkup implements INodeType {
 	description: INodeTypeDescription = {
@@ -42,6 +43,10 @@ export class Linkup implements INodeType {
 						value: 'fetch',
 					},
 					{
+						name: 'Research',
+						value: 'research',
+					},
+					{
 						name: 'Search',
 						value: 'search',
 					},
@@ -50,6 +55,7 @@ export class Linkup implements INodeType {
 			},
 			...searchDescription,
 			...fetchDescription,
+			...researchDescription,
 		],
 	};
 }
