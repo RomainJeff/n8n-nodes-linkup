@@ -44,12 +44,12 @@ export const searchOperationDescription: INodeProperties[] = [
 			{
 				name: 'Standard',
 				value: 'standard',
-				description: 'Fast search for straightforward queries (1 credit per call)',
+				description: 'Fast search for straightforward queries',
 			},
 			{
 				name: 'Deep',
 				value: 'deep',
-				description: 'Comprehensive search for complex queries (10 credits per call)',
+				description: 'Comprehensive search for complex queries',
 			},
 		],
 		routing: {
