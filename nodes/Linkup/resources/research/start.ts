@@ -60,7 +60,7 @@ export const startOperationDescription: INodeProperties[] = [
 		name: 'mode',
 		type: 'options',
 		default: 'Auto',
-		description: 'Pin the research agent mode. Auto lets the agent classify per request.',
+		description: 'Research agent mode. Use "Answer" for simple factual questions, "Investigate" for deeper analysis, "Research" for comprehensive multi-source results, or "Auto" to let the agent classify automatically.',
 		displayOptions: {
 			show: showOnlyForStart,
 		},
@@ -68,22 +68,22 @@ export const startOperationDescription: INodeProperties[] = [
 			{
 				name: 'Answer',
 				value: 'Answer',
-				description: 'Direct answer for simple questions',
+				description: 'Quick factual answers to simple, straightforward questions',
 			},
 			{
 				name: 'Auto',
 				value: 'Auto',
-				description: 'Agent auto-classifies per request',
+				description: 'Automatically selects the best mode based on query complexity',
 			},
 			{
 				name: 'Investigate',
 				value: 'Investigate',
-				description: 'Investigative mode for deeper analysis',
+				description: 'Deeper analysis for questions requiring cross-referencing or verification',
 			},
 			{
 				name: 'Research',
 				value: 'Research',
-				description: 'Full research mode for comprehensive results',
+				description: 'Comprehensive multi-source research for complex or broad topics',
 			},
 		],
 		routing: {
@@ -99,7 +99,7 @@ export const startOperationDescription: INodeProperties[] = [
 		name: 'reasoningDepth',
 		type: 'options',
 		default: 'L',
-		description: 'Pin the reasoning depth. Higher depths trade latency for thoroughness.',
+		description: 'Controls thoroughness vs speed. Use "S" for quick lookups, "M" for balanced queries, "L" for thorough research (default), "XL" for maximum depth on complex topics.',
 		displayOptions: {
 			show: showOnlyForStart,
 		},
@@ -107,22 +107,22 @@ export const startOperationDescription: INodeProperties[] = [
 			{
 				name: 'S — Small',
 				value: 'S',
-				description: 'Fastest, least thorough',
+				description: 'Fastest response, suitable for simple factual lookups',
 			},
 			{
 				name: 'M — Medium',
 				value: 'M',
-				description: 'Balanced speed and depth',
+				description: 'Balanced speed and depth for moderate questions',
 			},
 			{
 				name: 'L — Large',
 				value: 'L',
-				description: 'Default depth, thorough',
+				description: 'Thorough research, good default for most queries',
 			},
 			{
 				name: 'XL — Extra Large',
 				value: 'XL',
-				description: 'Most thorough, highest latency',
+				description: 'Maximum depth for complex topics requiring extensive analysis',
 			},
 		],
 		routing: {
