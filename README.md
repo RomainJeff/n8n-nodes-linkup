@@ -24,7 +24,7 @@ Community nodes are installed from npm. The package name is: `n8n-nodes-linkup-s
 
 ## Operations
 
-This node provides three main resources for interacting with the Linkup API:
+This node provides four main resources for interacting with the Linkup API:
 
 ### Search
 
@@ -112,6 +112,43 @@ Lists research tasks for your organization, with pagination and sorting.
 
 > **Polling pattern.** Because Research is asynchronous, the typical workflow is **Start → Wait → Get → IF status == completed**. Loop the Wait/Get until the task completes, then continue with the `output`. AI agents can do the same by calling the `Get` tool again later instead of blocking.
 
+### Task
+
+Create and manage **asynchronous batch tasks** via the unified `/v1/tasks` endpoint. A task wraps any of the three operation types (search, fetch, research) in an async job that you can poll for results. This is useful when you want to fire-and-forget, or when working with long-running operations.
+
+#### Create
+
+Creates an asynchronous task. You select the task type (search, fetch, or research) and configure the same parameters as the corresponding resource. Returns a task `id` and initial `status` (`pending`).
+
+**Configuration Options:**
+
+- **Task Type** (required): Choose `Search`, `Fetch`, or `Research`
+- All parameters from the selected type are available (query, depth, output type, URL, mode, reasoning depth, etc.)
+- The same optional filters apply depending on the task type
+
+#### Get
+
+Retrieves a task by its `id`. Use this to poll until `status` is `completed` (or `failed`) and read the final `output`.
+
+**Configuration Options:**
+
+- **Task ID** (required): The identifier returned by the Create operation
+
+#### Get Many
+
+Lists tasks for your organization, with pagination, sorting, and filtering.
+
+**Configuration Options:**
+
+- **Limit**: Max number of results per page (default 50, max 100)
+- **Page**: Page number (1-indexed)
+- **Sort By**: `createdAt` or `updatedAt`
+- **Sort Direction**: `asc` or `desc`
+- **Status**: Filter by `pending`, `processing`, `completed`, or `failed`
+- **Type**: Filter by `search`, `fetch`, or `research`
+
+> **Polling pattern.** The typical workflow is **Create → Wait → Get → IF status == completed**. Loop the Wait/Get until the task completes, then continue with the `output`.
+
 ## Credentials
 
 This node uses API key authentication to connect to the Linkup API.
@@ -160,11 +197,12 @@ For more information on obtaining and managing your API key, refer to the [Linku
 
 ### Combining Operations
 
-You can combine Search, Fetch, and Research operations in your workflows:
+You can combine Search, Fetch, Research, and Task operations in your workflows:
 1. Use **Search** to find relevant URLs
 2. Use **Fetch** to retrieve full content from those URLs
 3. Use **Research** for deep, multi-source investigations on a topic
-4. Process the markdown / structured content with other n8n nodes
+4. Use **Task** to run any of the above asynchronously and poll for results
+5. Process the markdown / structured content with other n8n nodes
 
 ## Resources
 
