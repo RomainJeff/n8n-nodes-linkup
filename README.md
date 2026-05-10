@@ -74,6 +74,16 @@ Kicks off a new research task. Returns a task `id` and an initial `status` (`pen
 - **Output Type** (required):
   - **Sourced Answer**: Returns a concise answer with source citations
   - **Structured**: Returns data according to a custom JSON schema you define
+- **Mode** (optional, default `Auto`):
+  - **Answer**: Direct answer for simple questions
+  - **Auto**: Agent auto-classifies per request
+  - **Investigate**: Investigative mode for deeper analysis
+  - **Research**: Full research mode for comprehensive results
+- **Reasoning Depth** (optional, default `L`):
+  - **S**: Fastest, least thorough
+  - **M**: Balanced speed and depth
+  - **L**: Default depth, thorough
+  - **XL**: Most thorough, highest latency
 - **Structured Output Schema** (required when Output Type is Structured): JSON schema defining the response shape
 
 **Optional Filters:**

@@ -56,6 +56,84 @@ export const startOperationDescription: INodeProperties[] = [
 		},
 	},
 	{
+		displayName: 'Mode',
+		name: 'mode',
+		type: 'options',
+		default: 'Auto',
+		description: 'Pin the research agent mode. Auto lets the agent classify per request.',
+		displayOptions: {
+			show: showOnlyForStart,
+		},
+		options: [
+			{
+				name: 'Answer',
+				value: 'Answer',
+				description: 'Direct answer for simple questions',
+			},
+			{
+				name: 'Auto',
+				value: 'Auto',
+				description: 'Agent auto-classifies per request',
+			},
+			{
+				name: 'Investigate',
+				value: 'Investigate',
+				description: 'Investigative mode for deeper analysis',
+			},
+			{
+				name: 'Research',
+				value: 'Research',
+				description: 'Full research mode for comprehensive results',
+			},
+		],
+		routing: {
+			request: {
+				body: {
+					mode: '={{ $value }}',
+				},
+			},
+		},
+	},
+	{
+		displayName: 'Reasoning Depth',
+		name: 'reasoningDepth',
+		type: 'options',
+		default: 'L',
+		description: 'Pin the reasoning depth. Higher depths trade latency for thoroughness.',
+		displayOptions: {
+			show: showOnlyForStart,
+		},
+		options: [
+			{
+				name: 'S — Small',
+				value: 'S',
+				description: 'Fastest, least thorough',
+			},
+			{
+				name: 'M — Medium',
+				value: 'M',
+				description: 'Balanced speed and depth',
+			},
+			{
+				name: 'L — Large',
+				value: 'L',
+				description: 'Default depth, thorough',
+			},
+			{
+				name: 'XL — Extra Large',
+				value: 'XL',
+				description: 'Most thorough, highest latency',
+			},
+		],
+		routing: {
+			request: {
+				body: {
+					reasoningDepth: '={{ $value }}',
+				},
+			},
+		},
+	},
+	{
 		displayName: 'Structured Output Schema',
 		name: 'structuredOutputSchema',
 		type: 'json',
