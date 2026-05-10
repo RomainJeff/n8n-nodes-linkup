@@ -3,7 +3,7 @@
 	"nodeVersion": "1.0",
 	"codexVersion": "1.0",
 	"categories": ["Data & Storage"],
-	"alias": ["linkup", "web search", "fetch", "scrape", "ai search"],
+	"alias": ["linkup", "web search", "fetch", "scrape", "ai search", "task", "batch"],
 	"resources": {
 		"primaryDocumentation": [
 			{

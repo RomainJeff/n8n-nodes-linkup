@@ -2,6 +2,7 @@ import { NodeConnectionTypes, type INodeType, type INodeTypeDescription } from '
 import { searchDescription } from './resources/search';
 import { fetchDescription } from './resources/fetch';
 import { researchDescription } from './resources/research';
+import { taskDescription } from './resources/task';
 
 export class Linkup implements INodeType {
 	description: INodeTypeDescription = {
@@ -50,12 +51,17 @@ export class Linkup implements INodeType {
 						name: 'Search',
 						value: 'search',
 					},
+					{
+						name: 'Task',
+						value: 'task',
+					},
 				],
 				default: 'search',
 			},
 			...searchDescription,
 			...fetchDescription,
 			...researchDescription,
+			...taskDescription,
 		],
 	};
 }
