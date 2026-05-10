@@ -24,7 +24,7 @@ Community nodes are installed from npm. The package name is: `n8n-nodes-linkup-s
 
 ## Operations
 
-This node provides two main operations for interacting with the Linkup API:
+This node provides three main resources for interacting with the Linkup API:
 
 ### Search
 
@@ -59,6 +59,58 @@ Fetch and convert any webpage to markdown format. This operation retrieves webpa
 - **Render JavaScript** (optional): Enable JavaScript rendering for dynamic content
 - **Extract Images** (optional): Extract and include image references from the page
 - **Include Raw HTML** (optional): Include the original HTML alongside the markdown
+
+### Research
+
+Run an **asynchronous, deep research task**. Unlike Search, the Research API kicks off a long-running job that performs comprehensive web research and is retrieved separately once it completes. Three operations are exposed so you (or an AI agent) can manage the task lifecycle:
+
+#### Start
+
+Kicks off a new research task. Returns a task `id` and an initial `status` (`pending`).
+
+**Configuration Options:**
+
+- **Query** (required): Your natural language research question
+- **Output Type** (required):
+  - **Sourced Answer**: Returns a concise answer with source citations
+  - **Structured**: Returns data according to a custom JSON schema you define
+- **Mode** (optional, default `Auto`):
+  - **Answer**: Direct answer for simple questions
+  - **Auto**: Agent auto-classifies per request
+  - **Investigate**: Investigative mode for deeper analysis
+  - **Research**: Full research mode for comprehensive results
+- **Reasoning Depth** (optional, default `L`):
+  - **S**: Fastest, least thorough
+  - **M**: Balanced speed and depth
+  - **L**: Default depth, thorough
+  - **XL**: Most thorough, highest latency
+- **Structured Output Schema** (required when Output Type is Structured): JSON schema defining the response shape
+
+**Optional Filters:**
+- Date range filtering (from/to dates)
+- Domain inclusion (up to 100) / exclusion lists
+- Include images in results
+
+#### Get
+
+Retrieves a research task by its `id`. Use this to poll until `status` is `completed` (or `failed`) and read the final `output`.
+
+**Configuration Options:**
+
+- **Task ID** (required): The identifier returned by the Start operation
+
+#### Get Many
+
+Lists research tasks for your organization, with pagination and sorting.
+
+**Configuration Options:**
+
+- **Limit**: Max number of results per page (default 50, max 100)
+- **Page**: Page number (1-indexed)
+- **Sort By**: `createdAt` or `updatedAt`
+- **Sort Direction**: `asc` or `desc`
+
+> **Polling pattern.** Because Research is asynchronous, the typical workflow is **Start → Wait → Get → IF status == completed**. Loop the Wait/Get until the task completes, then continue with the `output`. AI agents can do the same by calling the `Get` tool again later instead of blocking.
 
 ## Credentials
 
@@ -101,12 +153,18 @@ For more information on obtaining and managing your API key, refer to the [Linku
 - **Search Results**: Best for gathering multiple sources for further processing
 - **Structured**: Best when you need data in a specific format for downstream integrations
 
+### Search vs. Research
+
+- Use **Search** when you need a synchronous answer in seconds (one node, one response).
+- Use **Research** for in-depth investigations where it's acceptable to wait minutes for a more thorough result. Research returns a task you poll asynchronously.
+
 ### Combining Operations
 
-You can combine Search and Fetch operations in your workflows:
+You can combine Search, Fetch, and Research operations in your workflows:
 1. Use **Search** to find relevant URLs
 2. Use **Fetch** to retrieve full content from those URLs
-3. Process the markdown content with other n8n nodes
+3. Use **Research** for deep, multi-source investigations on a topic
+4. Process the markdown / structured content with other n8n nodes
 
 ## Resources
 
