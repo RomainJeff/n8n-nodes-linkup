@@ -127,15 +127,15 @@ export const createOperationDescription: INodeProperties[] = [
 	},
 	{
 		displayName: 'Output Type',
-		name: 'outputType',
+		name: 'outputTypeSearch',
 		type: 'options',
 		required: true,
 		default: 'sourcedAnswer',
-		description: 'Response format for the results',
+		description: 'Response format for the search results',
 		displayOptions: {
 			show: {
 				...showOnlyForCreate,
-				type: ['search', 'research'],
+				type: ['search'],
 			},
 		},
 		options: [
@@ -147,7 +147,40 @@ export const createOperationDescription: INodeProperties[] = [
 			{
 				name: 'Search Results',
 				value: 'searchResults',
-				description: 'Returns a list of relevant documents (search only)',
+				description: 'Returns a list of relevant documents',
+			},
+			{
+				name: 'Structured',
+				value: 'structured',
+				description: 'Returns structured output according to a user-defined schema',
+			},
+		],
+		routing: {
+			request: {
+				body: {
+					outputType: '={{ $value }}',
+				},
+			},
+		},
+	},
+	{
+		displayName: 'Output Type',
+		name: 'outputTypeResearch',
+		type: 'options',
+		required: true,
+		default: 'sourcedAnswer',
+		description: 'Response format for the research results',
+		displayOptions: {
+			show: {
+				...showOnlyForCreate,
+				type: ['research'],
+			},
+		},
+		options: [
+			{
+				name: 'Sourced Answer',
+				value: 'sourcedAnswer',
+				description: 'Returns a concise answer with sources',
 			},
 			{
 				name: 'Structured',
@@ -262,7 +295,30 @@ export const createOperationDescription: INodeProperties[] = [
 		displayOptions: {
 			show: {
 				...showOnlyForCreate,
-				outputType: ['structured'],
+				outputTypeSearch: ['structured'],
+			},
+		},
+		routing: {
+			request: {
+				body: {
+					structuredOutputSchema: '={{ $value }}',
+				},
+			},
+		},
+	},
+	{
+		displayName: 'Structured Output Schema',
+		name: 'researchStructuredOutputSchema',
+		type: 'json',
+		required: true,
+		default: '{}',
+		placeholder: '{ "name": "string", "age": "number" }',
+		description:
+			'JSON schema defining the structure of the response (required when Output Type is Structured). <a href="https://prompt.linkup.so/" target="_blank">Optimize your schema here</a>.',
+		displayOptions: {
+			show: {
+				...showOnlyForCreate,
+				outputTypeResearch: ['structured'],
 			},
 		},
 		routing: {
@@ -392,7 +448,7 @@ export const createOperationDescription: INodeProperties[] = [
 				displayOptions: {
 					show: {
 						'/type': ['search'],
-						'/outputType': ['sourcedAnswer'],
+						'/outputTypeSearch': ['sourcedAnswer'],
 					},
 				},
 				routing: {
@@ -432,7 +488,7 @@ export const createOperationDescription: INodeProperties[] = [
 				displayOptions: {
 					show: {
 						'/type': ['search'],
-						'/outputType': ['structured'],
+						'/outputTypeSearch': ['structured'],
 					},
 				},
 				routing: {
