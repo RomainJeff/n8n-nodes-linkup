@@ -12,7 +12,7 @@ export class Linkup implements INodeType {
 		group: ['input'],
 		version: 1,
 		subtitle: '={{$parameter["operation"] + ": " + $parameter["resource"]}}',
-		description: 'Consume Linkup API for web search and content fetching',
+		description: 'Consume Linkup API for web search, content fetching, research and async task operations',
 		defaults: {
 			name: 'Linkup',
 		},
