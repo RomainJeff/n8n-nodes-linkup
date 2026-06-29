@@ -27,10 +27,10 @@ describe('Linkup Node', () => {
 		});
 	});
 
-	it('should define all four resources', () => {
+	it('should define all five resources', () => {
 		const resourceProp = description.properties.find((p) => p.name === 'resource');
 		const values = (resourceProp?.options as Array<{ value: string }>)?.map((o) => o.value);
-		expect(values).toEqual(['fetch', 'research', 'search', 'task']);
+		expect(values).toEqual(['extract', 'fetch', 'research', 'search', 'task']);
 	});
 
 	it('should default resource to search', () => {

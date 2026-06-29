@@ -3,6 +3,7 @@ import { searchDescription } from './resources/search';
 import { fetchDescription } from './resources/fetch';
 import { researchDescription } from './resources/research';
 import { taskDescription } from './resources/task';
+import { extractDescription } from './resources/extract';
 
 export class Linkup implements INodeType {
 	description: INodeTypeDescription = {
@@ -12,7 +13,7 @@ export class Linkup implements INodeType {
 		group: ['input'],
 		version: 1,
 		subtitle: '={{$parameter["operation"] + ": " + $parameter["resource"]}}',
-		description: 'Consume Linkup API for web search, content fetching, research and async task operations',
+		description: 'Consume Linkup API for web search, content fetching, research, extract, and async task operations',
 		defaults: {
 			name: 'Linkup',
 		},
@@ -40,6 +41,10 @@ export class Linkup implements INodeType {
 				noDataExpression: true,
 				options: [
 					{
+						name: 'Extract',
+						value: 'extract',
+					},
+					{
 						name: 'Fetch',
 						value: 'fetch',
 					},
@@ -61,6 +66,7 @@ export class Linkup implements INodeType {
 			...searchDescription,
 			...fetchDescription,
 			...researchDescription,
+			...extractDescription,
 			...taskDescription,
 		],
 	};
