@@ -28,5 +28,3 @@ jobs:
 
       - name: Release
         run: npm run release
-        env:
-          NPM_CONFIG_LOGLEVEL: http
