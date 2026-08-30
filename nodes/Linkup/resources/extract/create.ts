@@ -68,7 +68,8 @@ export const createOperationDescription: INodeProperties[] = [
 				routing: {
 					request: {
 						body: {
-							schema: '={{ $value }}',
+							schema:
+								'={{ !$value || $value === "{}" ? undefined : typeof $value === "string" ? JSON.parse($value) : $value }}',
 						},
 					},
 				},

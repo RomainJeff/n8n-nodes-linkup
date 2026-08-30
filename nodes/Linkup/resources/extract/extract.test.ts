@@ -1,4 +1,5 @@
 import { describe, it, expect } from 'vitest';
+import type { INodeProperties, INodePropertyOptions } from 'n8n-workflow';
 import { extractDescription } from './index';
 import { createOperationDescription } from './create';
 import { getOperationDescription } from './get';
@@ -6,10 +7,7 @@ import { getManyOperationDescription } from './getMany';
 
 describe('Extract Resource', () => {
 	const operationProp = extractDescription.find((p) => p.name === 'operation');
-	const operations = operationProp?.options as Array<{
-		value: string;
-		routing: any;
-	}>;
+	const operations = operationProp?.options as INodePropertyOptions[];
 
 	it('should only show for extract resource', () => {
 		expect(operationProp?.displayOptions?.show).toEqual({ resource: ['extract'] });
@@ -64,18 +62,17 @@ describe('Extract Resource', () => {
 
 		it('should have schema option mapping to body.schema', () => {
 			const optionsField = createOperationDescription.find((p) => p.name === 'options');
-			const options = optionsField?.options as Array<{ name: string; routing: any }>;
+			const options = optionsField?.options as INodeProperties[];
 			const schema = options?.find((o) => o.name === 'schema');
-			expect(schema?.routing?.request?.body).toEqual({ schema: '={{ $value }}' });
+			expect(schema?.routing?.request?.body).toEqual({
+				schema:
+					'={{ !$value || $value === "{}" ? undefined : typeof $value === "string" ? JSON.parse($value) : $value }}',
+			});
 		});
 
 		it('should have verifyUrls option mapping to body.verifyUrls', () => {
 			const optionsField = createOperationDescription.find((p) => p.name === 'options');
-			const options = optionsField?.options as Array<{
-				name: string;
-				routing: any;
-				default: any;
-			}>;
+			const options = optionsField?.options as INodeProperties[];
 			const verifyUrls = options?.find((o) => o.name === 'verifyUrls');
 			expect(verifyUrls?.routing?.request?.body).toEqual({ verifyUrls: '={{ $value }}' });
 			expect(verifyUrls?.default).toBe(false);
