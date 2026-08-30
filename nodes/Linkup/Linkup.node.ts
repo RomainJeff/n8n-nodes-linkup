@@ -10,7 +10,8 @@ export class Linkup implements INodeType {
 		name: 'linkup',
 		icon: { light: 'file:../../icons/linkup.svg', dark: 'file:../../icons/linkup.dark.svg' },
 		group: ['input'],
-		version: 1,
+		version: [1, 1.1],
+		defaultVersion: 1.1,
 		subtitle: '={{$parameter["operation"] + ": " + $parameter["resource"]}}',
 		description: 'Consume Linkup API for web search, content fetching, research and async task operations',
 		defaults: {

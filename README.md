@@ -56,9 +56,17 @@ Fetch and convert any webpage to markdown format. This operation retrieves webpa
 **Configuration Options:**
 
 - **URL** (required): The webpage URL you want to fetch
+- **Mode** (optional): `standard` (default, most cost-effective) or `pro` (higher success rate on hard-to-retrieve pages, higher cost)
+- **Extract Structured Data** (optional): Extract typed JSON from the page using a JSON Schema
+  - **Extraction Schema**: JSON Schema of type `object` describing the JSON to extract (adds a flat $0.001 to the call)
+  - **Extraction Instructions**: Custom extraction rules the schema cannot express (max 4,000 characters)
 - **Render JavaScript** (optional): Enable JavaScript rendering for dynamic content
 - **Extract Images** (optional): Extract and include image references from the page
-- **Include Raw HTML** (optional): Include the original HTML alongside the markdown
+- **Include Raw Content** (optional): Include the raw page content alongside the markdown, with a `contentType` field indicating its format
+
+**Response fields:** `markdown` and `favicon` are always returned. `rawContent` + `contentType` appear when Include Raw Content is enabled, `images` when Extract Images is enabled, and `data` when an Extraction Schema is provided.
+
+> **Deprecated.** The **Include Raw HTML** option (and the `rawHtml` response field) is deprecated by the Linkup API. It remains available on nodes created with version 1 of this package, but new nodes should use **Include Raw Content** instead. There is no in-place upgrade in n8n: to migrate an existing node, remove it and add a new one.
 
 ### Research
 
@@ -123,8 +131,9 @@ Creates an asynchronous task. You select the task type (search, fetch, or resear
 **Configuration Options:**
 
 - **Task Type** (required): Choose `Search`, `Fetch`, or `Research`
-- All parameters from the selected type are available (query, depth, output type, URL, mode, reasoning depth, etc.)
+- All parameters from the selected type are available (query, depth, output type, URL, mode, structured extraction schema, reasoning depth, etc.)
 - The same optional filters apply depending on the task type
+- Fetch tasks support the same options as the Fetch resource, including `mode`, structured data extraction, and **Include Raw Content** (which replaces the deprecated **Include Raw HTML**)
 
 #### Get
 
