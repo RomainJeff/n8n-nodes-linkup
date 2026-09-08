@@ -1,7 +1,7 @@
 import type { INodeProperties } from 'n8n-workflow';
 
 const showOnlyForGetMany = {
-	resource: ['task'],
+	resource: ['extract'],
 	operation: ['getMany'],
 };
 
@@ -98,70 +98,6 @@ export const getManyOperationDescription: INodeProperties[] = [
 					request: {
 						qs: {
 							sortDirection: '={{ $value }}',
-						},
-					},
-				},
-			},
-			{
-				displayName: 'Status',
-				name: 'status',
-				type: 'options',
-				default: 'completed',
-				description: 'Filter tasks by status',
-				options: [
-					{
-						name: 'Completed',
-						value: 'completed',
-					},
-					{
-						name: 'Failed',
-						value: 'failed',
-					},
-					{
-						name: 'Pending',
-						value: 'pending',
-					},
-					{
-						name: 'Processing',
-						value: 'processing',
-					},
-				],
-				routing: {
-					request: {
-						qs: {
-							status: '={{ $value }}',
-						},
-					},
-				},
-			},
-			{
-				displayName: 'Type',
-				name: 'type',
-				type: 'options',
-				default: 'search',
-				description: 'Filter tasks by type',
-				options: [
-					{
-						name: 'Extract',
-						value: 'extract',
-					},
-					{
-						name: 'Fetch',
-						value: 'fetch',
-					},
-					{
-						name: 'Research',
-						value: 'research',
-					},
-					{
-						name: 'Search',
-						value: 'search',
-					},
-				],
-				routing: {
-					request: {
-						qs: {
-							type: '={{ $value }}',
 						},
 					},
 				},
