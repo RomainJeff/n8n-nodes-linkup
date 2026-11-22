@@ -212,20 +212,6 @@ export const startOperationDescription: INodeProperties[] = [
 				},
 			},
 			{
-				displayName: 'Include Images',
-				name: 'includeImages',
-				type: 'boolean',
-				default: false,
-				description: 'Whether to include images in the research results',
-				routing: {
-					request: {
-						body: {
-							includeImages: '={{ $value }}',
-						},
-					},
-				},
-			},
-			{
 				displayName: 'To Date',
 				name: 'toDate',
 				type: 'dateTime',

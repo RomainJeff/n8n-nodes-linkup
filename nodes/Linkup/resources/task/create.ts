@@ -542,10 +542,10 @@ export const createOperationDescription: INodeProperties[] = [
 				name: 'includeImages',
 				type: 'boolean',
 				default: false,
-				description: 'Whether to include images in the results',
+				description: 'Whether to include images in the search results (search only)',
 				displayOptions: {
 					show: {
-						'/type': ['search', 'research'],
+						'/type': ['search'],
 					},
 				},
 				routing: {
