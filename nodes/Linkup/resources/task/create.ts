@@ -247,7 +247,7 @@ export const createOperationDescription: INodeProperties[] = [
 		displayName: 'Mode',
 		name: 'mode',
 		type: 'options',
-		default: 'Auto',
+		default: 'auto',
 		description:
 			'Research agent mode. Use "Answer" for simple factual questions, "Investigate" for deeper analysis, "Research" for comprehensive multi-source results, or "Auto" to let the agent classify automatically.',
 		displayOptions: {
@@ -259,30 +259,31 @@ export const createOperationDescription: INodeProperties[] = [
 		options: [
 			{
 				name: 'Answer',
-				value: 'Answer',
+				value: 'answer',
 				description: 'Quick factual answers to simple, straightforward questions',
 			},
 			{
 				name: 'Auto',
-				value: 'Auto',
+				value: 'auto',
 				description: 'Automatically selects the best mode based on query complexity',
 			},
 			{
 				name: 'Investigate',
-				value: 'Investigate',
+				value: 'investigate',
 				description:
 					'Deeper analysis for questions requiring cross-referencing or verification',
 			},
 			{
 				name: 'Research',
-				value: 'Research',
+				value: 'research',
 				description: 'Comprehensive multi-source research for complex or broad topics',
 			},
 		],
 		routing: {
 			request: {
 				body: {
-					mode: '={{ $value }}',
+					// Lowercased at send time so workflows saved with the old capitalized values keep working
+					mode: '={{ $value.toLowerCase() }}',
 				},
 			},
 		},
