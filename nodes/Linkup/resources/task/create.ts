@@ -336,10 +336,11 @@ export const createOperationDescription: INodeProperties[] = [
 		name: 'structuredOutputSchema',
 		type: 'json',
 		required: true,
-		default: '{}',
-		placeholder: '{ "name": "string", "age": "number" }',
+		default: '{\n  "type": "object",\n  "properties": {}\n}',
+		placeholder:
+			'{ "type": "object", "properties": { "name": { "type": "string" }, "age": { "type": "number" } } }',
 		description:
-			'JSON schema defining the structure of the response (required when Output Type is Structured). <a href="https://prompt.linkup.so/" target="_blank">Optimize your schema here</a>.',
+			'JSON Schema of type "object" defining the structure of the response (required when Output Type is Structured). <a href="https://prompt.linkup.so/" target="_blank">Optimize your schema here</a>.',
 		displayOptions: {
 			show: {
 				...showOnlyForCreate,
@@ -359,10 +360,11 @@ export const createOperationDescription: INodeProperties[] = [
 		name: 'researchStructuredOutputSchema',
 		type: 'json',
 		required: true,
-		default: '{}',
-		placeholder: '{ "name": "string", "age": "number" }',
+		default: '{\n  "type": "object",\n  "properties": {}\n}',
+		placeholder:
+			'{ "type": "object", "properties": { "name": { "type": "string" }, "age": { "type": "number" } } }',
 		description:
-			'JSON schema defining the structure of the response (required when Output Type is Structured). <a href="https://prompt.linkup.so/" target="_blank">Optimize your schema here</a>.',
+			'JSON Schema of type "object" defining the structure of the response (required when Output Type is Structured). <a href="https://prompt.linkup.so/" target="_blank">Optimize your schema here</a>.',
 		displayOptions: {
 			show: {
 				...showOnlyForCreate,
