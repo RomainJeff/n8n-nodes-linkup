@@ -140,7 +140,7 @@ export const createOperationDescription: INodeProperties[] = [
 		required: true,
 		default: 'standard',
 		description:
-			'Search precision level. Fast is sub-second, standard balances speed and quality, deep is more comprehensive.',
+			'Search mode. Flash and Fast pass the query to the index as written; Standard and Deep run agentic search that interprets the query.',
 		displayOptions: {
 			show: {
 				...showOnlyForCreate,
@@ -149,19 +149,28 @@ export const createOperationDescription: INodeProperties[] = [
 		},
 		options: [
 			{
+				name: 'Flash (Alpha)',
+				value: 'flash',
+				description:
+					'Lowest latency (under 200 ms). Ranked sources and snippets from the index, no LLM.',
+			},
+			{
 				name: 'Fast',
 				value: 'fast',
-				description: 'Sub-second search optimized for simple, focused queries (beta)',
+				description:
+					'One-shot retrieval in about a second. Recommended default for most agentic applications.',
 			},
 			{
 				name: 'Standard',
 				value: 'standard',
-				description: 'Fast search for straightforward queries',
+				description:
+					'Single pass of agentic search (1–3 s) for queries spanning several topics or sources',
 			},
 			{
 				name: 'Deep',
 				value: 'deep',
-				description: 'Comprehensive search for complex queries',
+				description:
+					'Multi-iteration agentic search (5–30 s) optimized for coverage and multi-hop queries',
 			},
 		],
 		routing: {
