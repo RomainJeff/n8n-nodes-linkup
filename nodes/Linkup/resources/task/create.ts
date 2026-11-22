@@ -644,9 +644,12 @@ export const createOperationDescription: INodeProperties[] = [
 				displayName: 'Max Results',
 				name: 'maxResults',
 				type: 'number',
-				default: '',
-				placeholder: '10',
-				description: 'Maximum number of search results to return (search only)',
+				default: 10,
+				typeOptions: {
+					minValue: 1,
+				},
+				description:
+					'Maximum number of results to return. When this option is not set, the API returns up to 20 results until 2026-12-01 and up to 10 after.',
 				displayOptions: {
 					show: {
 						'/type': ['search'],
@@ -655,7 +658,7 @@ export const createOperationDescription: INodeProperties[] = [
 				routing: {
 					request: {
 						body: {
-							maxResults: '={{ $value }}',
+							maxResults: '={{ $value || undefined }}',
 						},
 					},
 				},
