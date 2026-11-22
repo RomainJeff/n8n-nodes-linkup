@@ -33,14 +33,16 @@ Perform web searches and retrieve context for AI grounding. The search operation
 **Configuration Options:**
 
 - **Query** (required): Your natural language search question
-- **Depth** (required): Choose search precision level
-  - **Fast**: Sub-second search optimized for simple, focused queries (beta)
-  - **Standard**: Fast search for straightforward queries
-  - **Deep**: Comprehensive search for complex queries requiring detailed analysis
+- **Depth** (required, default `standard`): Choose the search mode
+  - **Flash** (Alpha): Lowest latency (under 200 ms). Ranked sources and snippets from the index, no LLM
+  - **Fast**: One-shot retrieval in about a second, query passed to the index as written. Recommended default for most agentic applications
+  - **Standard**: Single pass of agentic search (1–3 s) for queries spanning several topics or sources
+  - **Deep**: Multi-iteration agentic search (5–30 s) optimized for coverage and multi-hop queries
 - **Output Type** (required): Select the response format
   - **Sourced Answer**: Returns a concise answer with source citations
   - **Search Results**: Returns a list of relevant documents
   - **Structured**: Returns data according to a custom JSON schema you define
+- **Structured Output Schema** (required when Output Type is Structured): JSON Schema whose root is of type `object`
 
 **Optional Filters:**
 - Date range filtering (from/to dates)
@@ -48,6 +50,7 @@ Perform web searches and retrieve context for AI grounding. The search operation
 - Include images in results
 - Inline citations (for sourced answers)
 - Include sources (for structured output)
+- Max results (minimum 1). When not set, the API returns up to 20 results until 2026-12-01 and up to 10 after
 
 ### Fetch
 
@@ -82,7 +85,7 @@ Kicks off a new research task. Returns a task `id` and an initial `status` (`pen
 - **Output Type** (required):
   - **Sourced Answer**: Returns a concise answer with source citations
   - **Structured**: Returns data according to a custom JSON schema you define
-- **Mode** (optional, default `Auto`):
+- **Mode** (optional, default `Auto`, sent to the API as lowercase `auto`, `answer`, `investigate` or `research`):
   - **Answer**: Direct answer for simple questions
   - **Auto**: Agent auto-classifies per request
   - **Investigate**: Investigative mode for deeper analysis
@@ -92,12 +95,11 @@ Kicks off a new research task. Returns a task `id` and an initial `status` (`pen
   - **M**: Balanced speed and depth
   - **L**: Default depth, thorough
   - **XL**: Most thorough, highest latency
-- **Structured Output Schema** (required when Output Type is Structured): JSON schema defining the response shape
+- **Structured Output Schema** (required when Output Type is Structured): JSON Schema whose root is of type `object`, defining the response shape
 
 **Optional Filters:**
 - Date range filtering (from/to dates)
 - Domain inclusion (up to 100) / exclusion lists
-- Include images in results
 
 #### Get
 
@@ -189,9 +191,10 @@ For more information on obtaining and managing your API key, refer to the [Linku
 
 ### Choosing a Depth
 
-- Use **fast** for simple, focused queries when latency matters
-- Use **standard** for most everyday queries
-- Reserve **deep** searches for complex questions requiring comprehensive analysis
+- Use **flash** (Alpha) when latency matters most and ranked snippets are enough
+- Use **fast** as the default for most agentic applications
+- Use **standard** for queries that span several topics or sources and benefit from agentic query interpretation
+- Reserve **deep** for complex, multi-hop questions requiring comprehensive coverage
 
 ### Search Output Types
 

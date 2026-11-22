@@ -31,25 +31,35 @@ export const searchOperationDescription: INodeProperties[] = [
 		type: 'options',
 		required: true,
 		default: 'standard',
-		description: 'Search precision level. Fast is sub-second, standard balances speed and quality, deep is more comprehensive.',
+		description:
+			'Search mode. Flash and Fast pass the query to the index as written; Standard and Deep run agentic search that interprets the query.',
 		displayOptions: {
 			show: showOnlyForSearch,
 		},
 		options: [
 			{
+				name: 'Flash (Alpha)',
+				value: 'flash',
+				description:
+					'Lowest latency (under 200 ms). Ranked sources and snippets from the index, no LLM.',
+			},
+			{
 				name: 'Fast',
 				value: 'fast',
-				description: 'Sub-second search optimized for simple, focused queries (beta)',
+				description:
+					'One-shot retrieval in about a second. Recommended default for most agentic applications.',
 			},
 			{
 				name: 'Standard',
 				value: 'standard',
-				description: 'Fast search for straightforward queries',
+				description:
+					'Single pass of agentic search (1–3 s) for queries spanning several topics or sources',
 			},
 			{
 				name: 'Deep',
 				value: 'deep',
-				description: 'Comprehensive search for complex queries',
+				description:
+					'Multi-iteration agentic search (5–30 s) optimized for coverage and multi-hop queries',
 			},
 		],
 		routing: {
@@ -100,9 +110,10 @@ export const searchOperationDescription: INodeProperties[] = [
 		name: 'structuredOutputSchema',
 		type: 'json',
 		required: true,
-		default: '{}',
-		placeholder: '{ "name": "string", "age": "number" }',
-		description: 'JSON schema defining the structure of the response (required when Output Type is Structured). <a href="https://prompt.linkup.so/" target="_blank">Optimize your schema here</a>.',
+		default: '{\n  "type": "object",\n  "properties": {}\n}',
+		placeholder:
+			'{ "type": "object", "properties": { "name": { "type": "string" }, "age": { "type": "number" } } }',
+		description: 'JSON Schema of type "object" defining the structure of the response (required when Output Type is Structured). <a href="https://prompt.linkup.so/" target="_blank">Optimize your schema here</a>.',
 		displayOptions: {
 			show: {
 				...showOnlyForSearch,
@@ -227,13 +238,16 @@ export const searchOperationDescription: INodeProperties[] = [
 				displayName: 'Max Results',
 				name: 'maxResults',
 				type: 'number',
-				default: '',
-				placeholder: '10',
-				description: 'Maximum number of search results to return in a single API call',
+				default: 10,
+				typeOptions: {
+					minValue: 1,
+				},
+				description:
+					'Maximum number of results to return. When this option is not set, the API returns up to 20 results until 2026-12-01 and up to 10 after.',
 				routing: {
 					request: {
 						body: {
-							maxResults: '={{ $value }}',
+							maxResults: '={{ $value || undefined }}',
 						},
 					},
 				},

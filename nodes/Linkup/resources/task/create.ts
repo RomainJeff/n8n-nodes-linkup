@@ -140,7 +140,7 @@ export const createOperationDescription: INodeProperties[] = [
 		required: true,
 		default: 'standard',
 		description:
-			'Search precision level. Fast is sub-second, standard balances speed and quality, deep is more comprehensive.',
+			'Search mode. Flash and Fast pass the query to the index as written; Standard and Deep run agentic search that interprets the query.',
 		displayOptions: {
 			show: {
 				...showOnlyForCreate,
@@ -149,19 +149,28 @@ export const createOperationDescription: INodeProperties[] = [
 		},
 		options: [
 			{
+				name: 'Flash (Alpha)',
+				value: 'flash',
+				description:
+					'Lowest latency (under 200 ms). Ranked sources and snippets from the index, no LLM.',
+			},
+			{
 				name: 'Fast',
 				value: 'fast',
-				description: 'Sub-second search optimized for simple, focused queries (beta)',
+				description:
+					'One-shot retrieval in about a second. Recommended default for most agentic applications.',
 			},
 			{
 				name: 'Standard',
 				value: 'standard',
-				description: 'Fast search for straightforward queries',
+				description:
+					'Single pass of agentic search (1–3 s) for queries spanning several topics or sources',
 			},
 			{
 				name: 'Deep',
 				value: 'deep',
-				description: 'Comprehensive search for complex queries',
+				description:
+					'Multi-iteration agentic search (5–30 s) optimized for coverage and multi-hop queries',
 			},
 		],
 		routing: {
@@ -247,7 +256,7 @@ export const createOperationDescription: INodeProperties[] = [
 		displayName: 'Mode',
 		name: 'mode',
 		type: 'options',
-		default: 'Auto',
+		default: 'auto',
 		description:
 			'Research agent mode. Use "Answer" for simple factual questions, "Investigate" for deeper analysis, "Research" for comprehensive multi-source results, or "Auto" to let the agent classify automatically.',
 		displayOptions: {
@@ -259,30 +268,31 @@ export const createOperationDescription: INodeProperties[] = [
 		options: [
 			{
 				name: 'Answer',
-				value: 'Answer',
+				value: 'answer',
 				description: 'Quick factual answers to simple, straightforward questions',
 			},
 			{
 				name: 'Auto',
-				value: 'Auto',
+				value: 'auto',
 				description: 'Automatically selects the best mode based on query complexity',
 			},
 			{
 				name: 'Investigate',
-				value: 'Investigate',
+				value: 'investigate',
 				description:
 					'Deeper analysis for questions requiring cross-referencing or verification',
 			},
 			{
 				name: 'Research',
-				value: 'Research',
+				value: 'research',
 				description: 'Comprehensive multi-source research for complex or broad topics',
 			},
 		],
 		routing: {
 			request: {
 				body: {
-					mode: '={{ $value }}',
+					// Lowercased at send time so workflows saved with the old capitalized values keep working
+					mode: '={{ $value.toLowerCase() }}',
 				},
 			},
 		},
@@ -335,10 +345,11 @@ export const createOperationDescription: INodeProperties[] = [
 		name: 'structuredOutputSchema',
 		type: 'json',
 		required: true,
-		default: '{}',
-		placeholder: '{ "name": "string", "age": "number" }',
+		default: '{\n  "type": "object",\n  "properties": {}\n}',
+		placeholder:
+			'{ "type": "object", "properties": { "name": { "type": "string" }, "age": { "type": "number" } } }',
 		description:
-			'JSON schema defining the structure of the response (required when Output Type is Structured). <a href="https://prompt.linkup.so/" target="_blank">Optimize your schema here</a>.',
+			'JSON Schema of type "object" defining the structure of the response (required when Output Type is Structured). <a href="https://prompt.linkup.so/" target="_blank">Optimize your schema here</a>.',
 		displayOptions: {
 			show: {
 				...showOnlyForCreate,
@@ -358,10 +369,11 @@ export const createOperationDescription: INodeProperties[] = [
 		name: 'researchStructuredOutputSchema',
 		type: 'json',
 		required: true,
-		default: '{}',
-		placeholder: '{ "name": "string", "age": "number" }',
+		default: '{\n  "type": "object",\n  "properties": {}\n}',
+		placeholder:
+			'{ "type": "object", "properties": { "name": { "type": "string" }, "age": { "type": "number" } } }',
 		description:
-			'JSON schema defining the structure of the response (required when Output Type is Structured). <a href="https://prompt.linkup.so/" target="_blank">Optimize your schema here</a>.',
+			'JSON Schema of type "object" defining the structure of the response (required when Output Type is Structured). <a href="https://prompt.linkup.so/" target="_blank">Optimize your schema here</a>.',
 		displayOptions: {
 			show: {
 				...showOnlyForCreate,
@@ -530,10 +542,10 @@ export const createOperationDescription: INodeProperties[] = [
 				name: 'includeImages',
 				type: 'boolean',
 				default: false,
-				description: 'Whether to include images in the results',
+				description: 'Whether to include images in the search results (search only)',
 				displayOptions: {
 					show: {
-						'/type': ['search', 'research'],
+						'/type': ['search'],
 					},
 				},
 				routing: {
@@ -632,9 +644,12 @@ export const createOperationDescription: INodeProperties[] = [
 				displayName: 'Max Results',
 				name: 'maxResults',
 				type: 'number',
-				default: '',
-				placeholder: '10',
-				description: 'Maximum number of search results to return (search only)',
+				default: 10,
+				typeOptions: {
+					minValue: 1,
+				},
+				description:
+					'Maximum number of results to return. When this option is not set, the API returns up to 20 results until 2026-12-01 and up to 10 after.',
 				displayOptions: {
 					show: {
 						'/type': ['search'],
@@ -643,7 +658,7 @@ export const createOperationDescription: INodeProperties[] = [
 				routing: {
 					request: {
 						body: {
-							maxResults: '={{ $value }}',
+							maxResults: '={{ $value || undefined }}',
 						},
 					},
 				},
