@@ -1,0 +1,21 @@
+version: 2
+updates:
+  - package-ecosystem: "npm"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+    groups:
+      minor-and-patch:
+        update-types: ["minor", "patch"]
+    ignore:
+      # @n8n/node-cli ships an eslint 9 config + plugins; eslint 10 is untested with it.
+      - dependency-name: "eslint"
+        versions: [">=10"]
+      # TypeScript 6/7 (native port) changes the compiler API used by n8n-node build.
+      - dependency-name: "typescript"
+        versions: [">=6"]
+
+  - package-ecosystem: "github-actions"
+    directory: "/"
+    schedule:
+      interval: "monthly"
